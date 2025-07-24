@@ -1,0 +1,108 @@
+---
+title: ES2020(第11版)
+description: 已于2020年正式发布
+icon: Sparkles
+---
+
+# 可选链 (Optional Chaining)
+
+```js
+const user = {
+  profile: {
+    address: {
+      street: "123 Main St",
+    },
+  },
+};
+
+// 安全地访问嵌套属性
+const street = user?.profile?.address?.street; // '123 Main St'
+const phone = user?.profile?.phone?.number; // undefined
+
+// 方法调用
+user?.profile?.getAddress?.(); // 安全调用方法
+```
+
+# 空值合并操作符 (Nullish Coalescing)
+
+```js
+const value1 = null ?? "default"; // 'default'
+const value2 = undefined ?? "default"; // 'default'
+const value3 = 0 ?? "default"; // 0
+const value4 = "" ?? "default"; // ''
+const value5 = false ?? "default"; // false
+```
+
+# BigInt 数据类型
+
+```js
+// 大整数支持
+const bigNum = 123456789012345678901234567890n;
+const anotherBig = BigInt("123456789012345678901234567890");
+
+console.log(bigNum + 1n); // 123456789012345678901234567891n
+```
+
+# Dynamic Import
+
+```js
+// 动态导入模块
+async function loadModule() {
+  const module = await import("./myModule.js");
+  module.doSomething();
+}
+
+// 条件导入
+if (condition) {
+  const { feature } = await import("./feature.js");
+  feature();
+}
+```
+
+# globalThis
+
+```js
+// 统一的全局对象访问
+const global = globalThis;
+// 在浏览器中：window
+// 在 Node.js 中：global
+// 在 Web Workers 中：self
+```
+
+# Promise.allSettled()
+
+```js
+const promises = [
+  Promise.resolve("成功1"),
+  Promise.reject("失败1"),
+  Promise.resolve("成功2"),
+];
+
+Promise.allSettled(promises).then((results) => {
+  results.forEach((result) => {
+    if (result.status === "fulfilled") {
+      console.log("成功:", result.value);
+    } else {
+      console.log("失败:", result.reason);
+    }
+  });
+});
+```
+
+# String.prototype.matchAll()
+
+```js
+const str = "test1 test2 test3";
+const regex = /test(\d)/g;
+
+// 获取所有匹配项的完整信息
+const matches = [...str.matchAll(regex)];
+// [['test1', '1'], ['test2', '2'], ['test3', '3']]
+```
+
+# import.meta
+
+```js
+// 模块元信息
+console.log(import.meta.url); // 当前模块的 URL
+```

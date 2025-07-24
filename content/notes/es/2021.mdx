@@ -1,0 +1,73 @@
+---
+title: ES2021(第12版)
+description: 已于2021年正式发布
+icon: Sparkles
+---
+
+# String.prototype.replaceAll()
+
+```js
+const str = "hello world hello";
+
+// 替换所有匹配项
+str.replaceAll("hello", "hi"); // 'hi world hi'
+str.replaceAll(/hello/g, "hi"); // 'hi world hi'
+```
+
+# Promise.any() 和 AggregateError
+
+```js
+const promises = [
+  Promise.reject("错误1"),
+  Promise.reject("错误2"),
+  Promise.resolve("成功！"),
+];
+
+// 返回第一个成功的 Promise
+Promise.any(promises)
+  .then((value) => console.log(value)) // '成功！'
+  .catch((error) => {
+    // AggregateError，包含所有错误
+    console.log(error.errors);
+  });
+```
+
+# WeakRefs 和 FinalizationRegistry
+
+```js
+// 弱引用
+let obj = { data: "important" };
+const weakRef = new WeakRef(obj);
+
+// 可能返回 undefined（如果对象被垃圾回收）
+const target = weakRef.deref();
+
+// 终结化注册表
+const registry = new FinalizationRegistry((heldValue) => {
+  console.log(`对象 ${heldValue} 被垃圾回收了`);
+});
+
+registry.register(obj, "myObject");
+```
+
+# 逻辑赋值操作符
+
+```js
+let a = 1;
+let b = null;
+let c = undefined;
+
+a ||= 10; // a = a || 10; a = 1
+b ||= 20; // b = b || 20; b = 20
+c &&= 30; // c = c && 30; c = undefined
+c ??= 40; // c = c ?? 40; c = 40
+```
+
+# 数字分隔符
+
+```js
+const million = 1_000_000;
+const binary = 0b1010_0001;
+const hex = 0xff_ec_de_5e;
+const bigInt = 123_456n;
+```

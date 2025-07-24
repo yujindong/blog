@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "Next.js: 服务端调试",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm run dev"
+    },
+    {
+      "name": "Next.js: 客户端调试",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "Next.js: 全栈调试",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
+      "runtimeArgs": ["--inspect"],
+      "skipFiles": ["<node_internals>/**"],
+      "serverReadyAction": {
+        "action": "debugWithChrome",
+        "killOnServerStop": true,
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "webRoot": "${workspaceFolder}"
+      }
+    }
+  ]
+}

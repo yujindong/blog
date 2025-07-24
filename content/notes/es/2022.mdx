@@ -1,0 +1,83 @@
+---
+title: ES2022(第13版)
+description: 已于2022年正式发布
+icon: Sparkles
+---
+
+# 类字段（Class Fields）
+
+```js
+class MyClass {
+  // 公共字段
+  publicField = "public";
+
+  // 私有字段
+  #privateField = "private";
+
+  // 静态字段
+  static staticField = "static";
+
+  // 私有静态字段
+  static #privateStaticField = "private static";
+
+  // 私有方法
+  #privateMethod() {
+    return this.#privateField;
+  }
+
+  // 静态块
+  static {
+    console.log("类初始化时执行");
+  }
+}
+```
+
+# Top-level await
+
+```js
+// 在模块顶层直接使用 await
+const data = await fetch("/api/data");
+const json = await data.json();
+
+export { json };
+```
+
+# Array.prototype.at()
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+arr.at(-1); // 5 (最后一个元素)
+arr.at(-2); // 4 (倒数第二个元素)
+arr.at(0); // 1 (第一个元素)
+```
+
+# Object.hasOwn()
+
+```js
+const obj = { prop: "value" };
+
+// 更安全的属性检查方法
+Object.hasOwn(obj, "prop"); // true
+// 替代 obj.hasOwnProperty('prop')
+```
+
+# 正则表达式匹配索引
+
+```js
+const regex = /a+(?<Z>z)?/d; // 注意 'd' 标志
+const match = regex.exec("xaaaz");
+
+console.log(match.indices); // [[1, 5], [4, 5]]
+console.log(match.indices.groups); // { Z: [4, 5] }
+```
+
+# Error Cause
+
+```js
+try {
+  riskyOperation();
+} catch (error) {
+  throw new Error("操作失败", { cause: error });
+}
+```

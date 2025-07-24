@@ -1,0 +1,112 @@
+---
+title: ES2017(第08版)
+description: 已于2017年正式发布
+icon: Sparkles
+---
+
+# async/await
+
+```js
+// Promise 的语法糖
+async function fetchData() {
+  try {
+    const response = await fetch("/api/data");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("获取数据失败:", error);
+  }
+}
+
+// 等价的 Promise 写法
+function fetchDataPromise() {
+  return fetch("/api/data")
+    .then((response) => response.json())
+    .catch((error) => console.error("获取数据失败:", error));
+}
+```
+
+# Object.entries() 和 Object.values()
+
+```js
+const obj = { a: 1, b: 2, c: 3 };
+
+// 获取键值对数组
+Object.entries(obj); // [['a', 1], ['b', 2], ['c', 3]]
+
+// 获取值数组
+Object.values(obj); // [1, 2, 3]
+
+// 遍历对象
+for (const [key, value] of Object.entries(obj)) {
+  console.log(`${key}: ${value}`);
+}
+```
+
+# String.prototype.padStart() 和 padEnd()
+
+```js
+const str = "123";
+
+str.padStart(5, "0"); // '00123'
+str.padEnd(5, "0"); // '12300'
+str.padStart(5); // '  123' (默认用空格填充)
+
+// 实用示例
+const hours = "9";
+const minutes = "5";
+const time = `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
+console.log(time); // '09:05'
+```
+
+# 函数参数列表末尾允许逗号
+
+```js
+// 现在允许在最后一个参数后面加逗号
+function myFunction(
+  param1,
+  param2,
+  param3, // 这个逗号现在是合法的
+) {
+  // 函数体
+}
+
+// 调用时也可以
+myFunction(
+  "arg1",
+  "arg2",
+  "arg3", // 这里也可以有逗号
+);
+```
+
+# Object.getOwnPropertyDescriptors()
+
+```js
+const obj = {
+  prop1: "value1",
+  get prop2() {
+    return "value2";
+  },
+};
+
+const descriptors = Object.getOwnPropertyDescriptors(obj);
+console.log(descriptors);
+/*
+{
+  prop1: { value: 'value1', writable: true, enumerable: true, configurable: true },
+  prop2: { get: [Function: get prop2], set: undefined, enumerable: true, configurable: true }
+}
+*/
+```
+
+# SharedArrayBuffer 和 Atomics
+
+```js
+// 共享内存（多线程编程）
+const sharedBuffer = new SharedArrayBuffer(1024);
+const sharedArray = new Int32Array(sharedBuffer);
+
+// 原子操作
+Atomics.store(sharedArray, 0, 123);
+const value = Atomics.load(sharedArray, 0);
+```

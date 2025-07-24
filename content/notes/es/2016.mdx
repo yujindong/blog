@@ -1,0 +1,38 @@
+---
+title: ES2016(第07版)
+description: 已于2016年正式发布
+icon: Sparkles
+---
+
+# 指数操作符 ()\*\*
+
+```js
+// 新的指数操作符
+console.log(2 ** 3); // 8
+console.log(2 ** 10); // 1024
+
+// 等价于
+console.log(Math.pow(2, 3)); // 8
+
+// 赋值操作符
+let x = 2;
+x **= 3; // x = x ** 3
+console.log(x); // 8
+```
+
+# Array.prototype.includes()
+
+```js
+const arr = [1, 2, 3, NaN];
+
+// 检查数组是否包含某个元素
+arr.includes(2); // true
+arr.includes(4); // false
+arr.includes(NaN); // true (这是与 indexOf 的重要区别)
+
+// indexOf 对比
+arr.indexOf(NaN); // -1 (无法正确检测 NaN)
+
+// 第二个参数指定起始位置
+arr.includes(2, 2); // false (从索引 2 开始查找)
+```

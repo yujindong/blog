@@ -1,0 +1,90 @@
+---
+title: ES2019(第10版)
+description: 已于2019年正式发布
+icon: Sparkles
+---
+
+# Array.prototype.flat() 和 flatMap()
+
+```js
+const nested = [1, [2, 3], [4, [5, 6]]];
+
+// 扁平化数组
+nested.flat(); // [1, 2, 3, 4, [5, 6]]
+nested.flat(2); // [1, 2, 3, 4, 5, 6]
+nested.flat(Infinity); // 完全扁平化
+
+// 映射后扁平化
+const words = ["hello", "world"];
+words.flatMap((word) => word.split(""));
+// ['h', 'e', 'l', 'l', 'o', 'w', 'o', 'r', 'l', 'd']
+```
+
+# Object.fromEntries()
+
+```js
+const entries = [
+  ["name", "John"],
+  ["age", 30],
+];
+const obj = Object.fromEntries(entries);
+// { name: 'John', age: 30 }
+
+// 与 Object.entries() 相反操作
+const original = { a: 1, b: 2 };
+const doubled = Object.fromEntries(
+  Object.entries(original).map(([key, value]) => [key, value * 2]),
+);
+// { a: 2, b: 4 }
+```
+
+# String.prototype.trimStart() 和 trimEnd()
+
+```js
+const str = "  hello world  ";
+
+str.trimStart(); // 'hello world  '
+str.trimEnd(); // '  hello world'
+str.trim(); // 'hello world'
+
+// 别名
+str.trimLeft(); // 同 trimStart()
+str.trimRight(); // 同 trimEnd()
+```
+
+# Symbol.prototype.description
+
+```js
+const sym = Symbol("my description");
+console.log(sym.description); // 'my description'
+
+const sym2 = Symbol();
+console.log(sym2.description); // undefined
+```
+
+# 可选的 catch 绑定
+
+```js
+// ES2018 及之前
+try {
+  riskyOperation();
+} catch (error) {
+  // 必须有参数
+  handleError();
+}
+
+// ES2019
+try {
+  riskyOperation();
+} catch {
+  // 可以省略参数
+  handleError();
+}
+```
+
+# JSON.stringify 的改进
+
+```js
+// 修复了对某些 Unicode 字符的处理
+console.log(JSON.stringify("\uD800")); // "\"\\ud800\""
+```

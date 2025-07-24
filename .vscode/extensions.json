@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "kisstkondoros.vscode-codemetrics",
+    "editorconfig.editorconfig",
+    "aaron-bond.better-comments",
+    "naumovs.color-highlight",
+    "usernamehw.errorlens",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "foxundermoon.shell-format"
+  ]
+}

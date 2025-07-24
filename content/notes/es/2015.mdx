@@ -1,0 +1,196 @@
+---
+title: ES2015(第06版)
+description: 这是 JavaScript 历史上最重要的版本更新，引入了现代 JavaScript 的核心特性
+icon: Sparkles
+---
+
+# let 和 const 声明
+
+```js
+// 块级作用域
+if (true) {
+  let blockScoped = "only in this block";
+  const CONSTANT = "cannot be reassigned";
+}
+// blockScoped 和 CONSTANT 在这里不可访问
+
+// 时间死区
+console.log(hoisted); // ReferenceError
+let hoisted = "value";
+```
+
+# 箭头函数
+
+```js
+// 简洁语法
+const add = (a, b) => a + b;
+const square = (x) => x * x;
+const greet = () => "Hello!";
+
+// 词法 this 绑定
+class Timer {
+  constructor() {
+    this.seconds = 0;
+    setInterval(() => {
+      this.seconds++; // this 指向 Timer 实例
+    }, 1000);
+  }
+}
+```
+
+# 类 (Classes)
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(`${this.name} makes a sound`);
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
+
+  speak() {
+    console.log(`${this.name} barks`);
+  }
+}
+```
+
+# 模板字符串
+
+```js
+const name = "World";
+const greeting = `Hello, ${name}!`;
+
+// 多行字符串
+const multiline = `
+  Line 1
+  Line 2
+  Line 3
+`;
+
+// 标签模板
+function highlight(strings, ...values) {
+  return strings.reduce((result, string, i) => {
+    return result + string + (values[i] ? `<mark>${values[i]}</mark>` : "");
+  }, "");
+}
+```
+
+# 解构赋值
+
+```js
+// 数组解构
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+
+// 对象解构
+const { name, age, city = "Unknown" } = person;
+
+// 函数参数解构
+function greet({ name, age }) {
+  console.log(`Hello ${name}, you are ${age} years old`);
+}
+```
+
+# 默认参数
+
+```js
+function greet(name = "Guest", greeting = "Hello") {
+  return `${greeting}, ${name}!`;
+}
+```
+
+# Rest/Spread 操作符
+
+```js
+// Rest 参数
+function sum(...numbers) {
+  return numbers.reduce((a, b) => a + b, 0);
+}
+
+// Spread 操作符
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+```
+
+# Map 和 Set
+
+```js
+// Map
+const map = new Map();
+map.set("key1", "value1");
+map.set(123, "numeric key");
+
+// Set
+const set = new Set([1, 2, 3, 3, 3]); // {1, 2, 3}
+```
+
+# Promise
+
+```js
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("成功!"), 1000);
+});
+
+promise
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+```
+
+# Generator 函数
+
+```js
+function* fibonacci() {
+  let a = 0,
+    b = 1;
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b];
+  }
+}
+
+const fib = fibonacci();
+console.log(fib.next().value); // 0
+console.log(fib.next().value); // 1
+console.log(fib.next().value); // 1
+```
+
+# Symbol 类型
+
+```js
+const sym1 = Symbol("description");
+const sym2 = Symbol("description");
+console.log(sym1 === sym2); // false
+
+// 全局 Symbol
+const globalSym = Symbol.for("global");
+```
+
+# 迭代器和 for...of
+
+```js
+const iterable = [1, 2, 3];
+
+for (const value of iterable) {
+  console.log(value); // 1, 2, 3
+}
+```
+
+# 模块系统
+
+```js
+// 导出
+export const PI = 3.14159;
+export default function calculate() {}
+
+// 导入
+import calculate, { PI } from "./math.js";
+import * as Math from "./math.js";
+```

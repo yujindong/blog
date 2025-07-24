@@ -1,0 +1,451 @@
+---
+title: ES2025(第16版)
+description: ECMAScript2025 已于2025年6月25日正式发布，该规范标准化了新的 JavaScript 功能，包括 JSON 模块、import 属性、新的 Set 方法、同步迭代器帮助程序和正则表达式修饰符。
+icon: Sparkles
+keyword:
+  - ES2025
+  - ES2025提案的内容
+---
+
+- [GitHub ECMA-262](https://github.com/tc39/proposals/blob/main/finished-proposals.md) 页面上已完成的 9 个提案获得了批准
+- [GitHub ECMA-402](https://github.com/tc39/proposals/blob/main/ecma402/finished-proposals.md) 页面上的用于持续时间格式化对象 `Intl.DurationFormat`
+
+## Intl.DurationFormat (持续时间格式化)
+
+### 基本用法
+
+```js
+const duration = {
+  hours: 1,
+  minutes: 30,
+  seconds: 10,
+};
+new Intl.DurationFormat("zh-CN", { style: "short" }).format(duration);
+// -> '1小时30分钟10秒'
+new Intl.DurationFormat("zh-CN", { style: "long" }).format(duration);
+// -> '1小时30分钟10秒钟'
+```
+
+### API
+
+- [Intl.DurationFormat](https://github.com/tc39/proposal-intl-duration-format?tab=readme-ov-file#api-design)
+- [Intl.DurationFormat#format](https://github.com/tc39/proposal-intl-duration-format?tab=readme-ov-file#intldurationformatformat)
+- [Intl.DurationFormat#formatToParts](https://github.com/tc39/proposal-intl-duration-format?tab=readme-ov-file#intldurationformatformattoparts)
+
+## Import Attributes（导入属性）与 JSON Modules（JSON模块）
+
+[JSON模块提案](https://github.com/tc39/proposal-json-modules) 基于 [导入属性提案](https://github.com/tc39/proposal-import-attributes) ，添加了跨 JavaScript 环境以通用方式导入 JSON 模块的功能。
+
+### 使用
+
+```js
+// 静态导入
+import json from "./foo.json" with { type: "json" };
+// 动态导入
+await import("foo.json", { with: { type: "json" } });
+```
+
+[查看详细](https://github.com/tc39/proposal-json-modules)
+
+## Set集合方法 - 添加标准的数学集合运算操作
+
+### 方法列表
+
+- Set.prototype.intersection(other) - 交集
+- Set.prototype.union(other) - 并集
+- Set.prototype.difference(other) - 差集
+- Set.prototype.symmetricDifference(other) - 对称差集
+- Set.prototype.isSubsetOf(other) - 子集判断
+- Set.prototype.isSupersetOf(other) - 超集判断
+- Set.prototype.isDisjointFrom(other) - 不相交判断
+
+### 使用
+
+```js tab="交集"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+setA.intersection(setB); // Set {3}
+```
+
+```js tab="并集"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+setA.union(setB); // Set {1, 2, 3, 4, 5}
+```
+
+```js tab="差集"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+setA.difference(setB); // Set {1, 2}
+```
+
+```js tab="对称差集"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+setA.symmetricDifference(setB); // Set {1, 2, 4, 5}
+```
+
+```js tab="子集"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+const setC = new Set([1, 2, 3, 4]);
+setA.isSubsetOf(setB); // false
+setA.isSubsetOf(setC); // true
+```
+
+```js tab="超集"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+const setC = new Set([2, 3]);
+setA.isSupersetOf(setB); // false
+setA.isSupersetOf(setC); // true
+```
+
+```js tab="不相交"
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+const setC = new Set([4, 5, 6]);
+setA.isDisjointFrom(setB); // false 相交
+setA.isDisjointFrom(setC); // true 不相交
+```
+
+### polyfill
+
+- [core-js](https://github.com/zloirock/core-js#new-set-methods)
+- [es-shimes](https://github.com/es-shims)
+  > - [difference](https://npmjs.com/set.prototype.difference)
+  > - [intersection](https://npmjs.com/set.prototype.intersection)
+  > - [symmetricDifference](https://npmjs.com/set.prototype.symmetricdifference)
+  > - [union](https://npmjs.com/set.prototype.union)
+  > - [isDisjointFrom](https://npmjs.com/set.prototype.isdisjointfrom)
+  > - [isSubsetOf](https://npmjs.com/set.prototype.issubsetof)
+  > - [isSupersetOf](https://npmjs.com/set.prototype.issupersetof)
+
+## 正则表达式的不同分支中使用相同的组名
+
+允许在正则表达式的不同分支中使用相同的组名。
+
+2024年8月起在主要浏览器已实现： [查看兼容](https://caniuse.com/mdn-javascript_regular_expressions_named_capturing_group_duplicate_named_capturing_groups) [查看详细](https://github.com/tc39/proposal-duplicate-named-capturing-groups)
+
+## 正则表达式中的字符转义
+
+该提案旨在研究转义字符串以在正则表达式中使用的问题领域。
+
+[正式规范内容](https://tc39.es/proposal-regex-escaping/) 此提案是 [第四阶段](https://github.com/tc39/proposals) 提案
+
+### 提案动机
+
+通常情况下，我们想从字符串中构建正则表达式，而不将字符串中的特殊字符视为特殊的正则表达式标记。
+
+例如，如果我们想替换我们从用户那里得到的字符串 `let text = “Hello.”` 的所有匹配项，我们可能很想执行 `myText.replace(new RegExp(text, "g"), "")` .但是，这会将 `.` 与任何字符匹配，而不是将其与点匹配。
+
+### 实现方案
+
+使用`Regexp.escape` 方法转义
+
+```js
+RegExp.escape("The Quick Brown Fox"); // "\\x54he\\x20Quick\\x20Brown\\x20Fox"
+RegExp.escape("Buy it. use it. break it. fix it."); // "\\x42uy\\x20it\\.\\x20use\\x20it\\.\\x20break\\x20it\\.\\x20fix\\x20it\\."
+RegExp.escape("(*.*)"); // "\\(\\*\\.\\*\\)"
+RegExp.escape("｡^･ｪ･^｡"); // "｡\\^･ｪ･\\^｡"
+RegExp.escape("😊 *_* +_+ ... 👍"); // "😊\\x20\\*_\\*\\x20\\+_\\+\\x20\\.\\.\\.\\x20👍"
+RegExp.escape("\\d \\D (?:)"); // "\\\\d\\x20\\\\D\\x20\\(\\?\\x3a\\)"
+```
+
+### 使用
+
+```js tab="不使用转义"
+let text = "Hello."; // 来自用户输入
+const myText = "Hello World! Hello.";
+const result = myText.replace(new RegExp(text, "g"), "");
+// result 结果是 "World! " 期望是 "Hello World! "
+```
+
+```js tab="使用转义"
+let text = "Hello."; // 来自用户输入
+const myText = "Hello World! Hello.";
+const result = myText.replace(new RegExp(RegExp.escape(text), "g"), "");
+// result 结果是 "Hello World! "
+```
+
+### polyfill
+
+- es-shimes: [regexp.escape](https://www.npmjs.com/package/regexp.escape)
+- [core-js](https://www.npmjs.com/package/core-js)
+- [@li/regexp-escape-polyfill](https://jsr.io/@li/regexp-escape-polyfill)
+
+## 正则表达式模式修饰符
+
+允许对正则表达式的部分应用标志，而不是整个表达式。
+
+### 语法
+
+- `i` - 忽略大小写
+- `m` - 多行
+- `s` - 单行
+- `x` - [扩展模式](https://github.com/rbuckton/proposal-regexp-x-mode)
+
+- `(?imsx-imsx:subexpression)` — 设置或者取消设置(使用 `-`)子表达式的指定标志
+
+### 使用
+
+```js tab="设置"
+// 使 h 忽略大小写
+const reg = /^(?i:h)ello$/;
+reg.test("Hello"); // true
+reg.test("hello"); // true
+reg.test("hEllo"); // false
+```
+
+```js tab="取消设置"
+// 使 h 取消忽略大小写
+const reg = /^(?-i:h)ello$/i;
+reg.test("Hello"); // false
+reg.test("hello"); // true
+```
+
+## 添加16位浮点数支持
+
+- 添加一种新的TypedArray `Float16Array` 以补充现有的 `Float32Array` 和 `Float64Array`。
+- 在 `DataView` 上添加两个用于读取和设置 `float16` 值的新方法 `getFloat16` 和 `setFloat16`, 以补充现有的用于处理全精度和双精度浮点数的类似方法。
+- 提供了 `Math.f16round` 以补充现有的 `Math.fround`
+- [正式规范内容](https://tc39.es/proposal-float16array/)
+- 这个提案截至2025年2月会议时处于 [TC39](https://tc39.es/process-document/) 流程的第4阶段：已完成，已纳入ecma262，并 [在浏览器中发布](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float16Array)。
+
+### 对比
+
+| 特性              | Float16Array(半精度)                            | Float16Array(单精度)                            | Float16Array(双精度)                            |
+| ----------------- | ----------------------------------------------- | ----------------------------------------------- | ----------------------------------------------- |
+| 内存占用          | 每个元素2字节<br />`new Float16Array(1000) 2KB` | 每个元素4字节<br />`new Float32Array(1000) 4KB` | 每个元素8字节<br />`new Float64Array(1000) 8KB` |
+| IEEE754结构       | 1 符号位 + 5 指数位 + 10 尾数位                 | 1 符号位 + 8 指数位 + 23 尾数位                 | 1 符号位 + 11 指数位 + 52 尾数位                |
+| 范围              | ±65504 (易溢出/下溢)                            | ±3.4e38 (通用)                                  | ±1.8e308 (极大/极小值)                          |
+| ​​有效数字精度​ ​ | 约 ​​3~4 位十进制小数​​                         | 约 ​​6~7 位十进制小数​​                         | 约 ​​15~17 位十进制小数​​                       |
+
+# Iterator 对象的辅助方法
+
+该提案在迭代器原型上引入了一系列新方法，以允许迭代器的一般使用和使用。有关实现方法的具体信息，请参阅[规范](https://tc39.es/proposal-iterator-helpers)。
+
+### 方法列表
+
+- `.map(mapperFn)` 将函数作为参数。它允许用户将函数应用于从迭代器返回的每个元素。返回应用了 map 函数的值的迭代器。
+- `.filter(filtererFn)` 将函数作为参数。它允许用户从未传递过滤器函数的迭代器中跳过值。返回来自通过筛选器的原始迭代器的值的迭代器。
+- `.take(limit)` 取一个整数作为参数。它返回一个迭代器，该迭代器最多生成由底层迭代器生成的给定数量的元素。返回一个迭代器，其中包含原始迭代器中的项目，从 0 到限制。
+- `.drop(limit)` 采用整数作为参数。它跳过底层迭代器生成的给定数量的元素，然后再生成任何剩余元素。返回限制之后的项迭代器。
+- `.flatMap(mapperFn)` 将映射函数作为参数。它返回一个迭代器，该迭代器通过将映射函数应用于底层迭代器生成的元素而生成迭代器的所有元素。返回平面值的迭代器。
+- `.reduce(reducer [, initialValue ])` 将函数和可选的初始值作为参数。它允许用户将函数应用于从迭代器返回的每个元素，同时跟踪 reducer 的最新结果（备忘录）。对于第一个元素，给定的初始值用作备忘录。返回返回给 reducer 函数的类型的值（在本例中为数字）。
+- `.toArray()` 当您有一个希望转换为数组的非无限迭代器时，您可以使用内置的 toArray 方法来实现。返回一个包含迭代器值的数组。
+- `.forEach(fn)` 要将副作用与迭代器一起使用，您可以使用 .forEach 内置方法，该方法将函数作为参数。 返回`undefined`。
+- `.some(fn)` 要检查迭代器中是否有任何值与给定谓词匹配，可以使用 .some。它采用返回 true 或 false 的函数作为参数。返回一个布尔值，如果任何元素在调用 fn 时返回 true，则该布尔值为 true。调用某些迭代器时，迭代器将被消耗。
+- `.every(fn)` 接受一个返回布尔值作为参数的函数。它用于检查迭代器生成的每个值是否都通过了测试函数。返回一个布尔值。
+- `.find(fn)` 将函数作为参数。它用于查找迭代器中匹配的第一个元素。返回找到的元素，如果没有元素与 fn 匹配，则返回 `undefined`。
+- `Iterator.from(object)` 是一个静态方法（与上面列出的其他方法不同），它将对象作为参数。此方法允许使用迭代器包装“类似迭代器”的对象。如果对象已经是迭代器，则返回对象，如果传递的对象实现可调用的@@iterator 属性，则返回包装迭代器。
+
+### 使用
+
+```js tab="map"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const result = naturals().map((value) => {
+  return value * value;
+});
+result.next(); //  {value: 0, done: false};
+result.next(); //  {value: 1, done: false};
+result.next(); //  {value: 4, done: false};
+```
+
+```js tab="filter"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const result = naturals().filter((value) => {
+  return value % 2 == 0;
+});
+result.next(); //  {value: 0, done: false};
+result.next(); //  {value: 2, done: false};
+result.next(); //  {value: 4, done: false};
+```
+
+```js tab="take"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const result = naturals().take(3);
+result.next(); //  {value: 0, done: false};
+result.next(); //  {value: 1, done: false};
+result.next(); //  {value: 2, done: false};
+result.next(); //  {value: undefined, done: true};
+```
+
+```js tab="drop"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const result = naturals().drop(3);
+result.next(); //  {value: 3, done: false};
+result.next(); //  {value: 4, done: false};
+result.next(); //  {value: 5, done: false};
+```
+
+```js tab="flatMap"
+const sunny = ["It's Sunny in", "", "California"].values();
+
+const result = sunny.flatMap((value) => value.split(" ").values());
+result.next(); //  {value: "It's", done: false};
+result.next(); //  {value: "Sunny", done: false};
+result.next(); //  {value: "in", done: false};
+result.next(); //  {value: "", done: false};
+result.next(); //  {value: "California", done: false};
+result.next(); //  {value: undefined, done: true};
+```
+
+```js tab="reduce"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const result = naturals()
+  .take(5)
+  .reduce((sum, value) => {
+    return sum + value;
+  }, 3);
+
+result; // 13
+```
+
+```js tab="toArray"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const result = naturals().take(5).toArray();
+
+result; // [0, 1, 2, 3, 4]
+```
+
+```js tab="forEach"
+const log = [];
+const fn = (value) => log.push(value);
+const iter = [1, 2, 3].values();
+
+iter.forEach(fn);
+console.log(log.join(", ")); // "1, 2, 3"
+```
+
+```js tab="some"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const iter = naturals().take(4);
+
+iter.some((v) => v > 1); // true
+iter.some((v) => true); // false, iterator is already consumed.
+
+naturals()
+  .take(4)
+  .some((v) => v > 1); // true
+naturals()
+  .take(4)
+  .some((v) => v == 1); // true, acting on a new iterator
+```
+
+```js tab="every"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+const iter = naturals().take(10);
+
+iter.every((v) => v >= 0); // true
+iter.every((v) => false); // true, iterator is already consumed.
+
+naturals()
+  .take(4)
+  .every((v) => v > 0); // false, first value is 0
+naturals()
+  .take(4)
+  .every((v) => v >= 0); // true, acting on a new iterator
+```
+
+```js tab="find"
+function* naturals() {
+  let i = 0;
+  while (true) {
+    yield i;
+    i += 1;
+  }
+}
+
+naturals().find((v) => v > 1); // 2
+```
+
+```js tab="Iterator.from"
+class Iter {
+  next() {
+    return { done: false, value: 1 };
+  }
+}
+
+const iter = new Iter();
+const wrapper = Iterator.from(iter);
+
+wrapper.next(); // { value: 1, done: false }
+```
+
+## 新增 Promise.try 方法
+
+[正式规范内容](https://tc39.es/proposal-promise-try/) 此提案是 [第四阶段](https://github.com/tc39/proposals) 提案
+
+### 使用
+
+```js
+// 简化 Promise 链的处理
+Promise.try(() => {
+  // 可能抛出错误或返回值的函数
+  return riskyOperation();
+}).catch((error) => {
+  console.error("操作失败:", error);
+});
+```
+
+### polyfill
+
+- [core-js](https://www.npmjs.com/package/core-js) v3.37+ [文档](https://github.com/zloirock/core-js#promisetry)
+- es-shims: [promise.try](https://www.npmjs.com/package/promise.try)

@@ -1,5 +1,75 @@
 ---
-title: ZOD
+title: ZOD使用笔记
+description: TypeScript 优先的模式验证，具有静态类型推断
 ---
 
-# ZOD
+2025年7月8日官方发布4.0版本
+
+[官方文档](https://zod.dev/)
+
+## 安装
+
+```bash tab="pnpm"
+pnpm add zod
+```
+
+```bash tab="npm"
+npm install zod
+```
+
+```bash tab="bun"
+bun add zod
+```
+
+```bash tab="deno"
+deno add npm:zod
+```
+
+## V4 与 V3版本使用对比
+
+### 自定义错误
+
+#### 1. `message` 字段 替换成 `error`
+
+目前在v4版本中 `message` 字段仍然可用，但是已经被标记启用(不建议继续使用)
+
+```ts tab="Zod v4"
+z.string().min(5, { error: "" });
+```
+
+```ts tab="Zod v3"
+z.string().min(5, { message: "Too short." });
+```
+
+#### 2. 移除 `invalid_type_error` 与 `required_error`
+
+```ts tab="Zod v4"
+z.string({
+  error: (issue) =>
+    issue.input === undefined ? "这是必填字段" : "必须是字符串",
+});
+```
+
+```ts tab="Zod v3"
+z.string({
+  required_error: "这是必填字段",
+  invalid_type_error: "必须是字符串",
+});
+```
+
+## 模版
+
+```ts tab="Zod v4"
+
+```
+
+```ts tab="Zod v3"
+
+```
+
+## 使用记录
+
+## 注意
+
+- 截止到2025年7月官方只针对TypeScript5.5以及更高版本进行了测试，旧版本可以使用但不受官方支持
+- 必须在 `tsconfig.json`中启用严格模式 `strict: true`

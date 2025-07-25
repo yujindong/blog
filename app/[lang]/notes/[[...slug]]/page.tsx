@@ -17,10 +17,10 @@ function PreviewRenderer({ preview }: { preview: string }): ReactNode {
 }
 
 export default async function Page(props: {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ lang: string; slug?: string[] }>;
 }) {
   const params = await props.params;
-  const page = notes.getPage(params.slug);
+  const page = notes.getPage(params.slug, params.lang);
   if (!page) notFound();
 
   // const preview = page.data.preview;
@@ -39,18 +39,31 @@ export default async function Page(props: {
 }
 
 export async function generateStaticParams() {
-  return notes.generateParams();
+  return notes.generateParams("slug", "locale");
 }
 
 export async function generateMetadata(props: {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ lang: string; slug?: string[] }>;
 }): Promise<Metadata> {
-  const params = await props.params;
-  const page = notes.getPage(params.slug);
+  const { slug, lang } = await props.params;
+  const page = notes.getPage(slug, lang);
   if (!page) notFound();
-
+  const image = {
+    url: ["/og", ...(slug || []), "image.png"].join("/"),
+    width: 1200,
+    height: 630,
+  };
+  const prefix = lang !== "cn" ? `/${lang}` : "";
   return {
     title: page.data.title,
+    keywords: page.data.keywords,
     description: page.data.description,
+    openGraph: {
+      url: `${prefix}/notes/${page.slugs.join("/")}`,
+      images: [image],
+    },
+    twitter: {
+      images: [image],
+    },
   };
 }

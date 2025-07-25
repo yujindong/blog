@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   serverExternalPackages: ["oxc-transform"],
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

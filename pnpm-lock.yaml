@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@orama/tokenizers':
+        specifier: ^3.1.11
+        version: 3.1.11
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
@@ -623,6 +626,10 @@ packages:
 
   '@orama/orama@3.1.11':
     resolution: {integrity: sha512-Szki0cgFiXE5F9RLx2lUyEtJllnuCSQ4B8RLDwIjXkVit6qZjoDAxH+xhJs29MjKLDz0tbPLdKFa6QrQ/qoGGA==}
+    engines: {node: '>= 20.0.0'}
+
+  '@orama/tokenizers@3.1.11':
+    resolution: {integrity: sha512-fwULrEdbP5/83gFjaX1X/l7lzdD7LxBT8YbAzcY89BmXjJcJETU/5qckp4ZNDMhRRjJUSGKH4bAXHsm6yu+ZPw==}
     engines: {node: '>= 20.0.0'}
 
   '@oxc-transform/binding-android-arm64@0.75.1':
@@ -3851,6 +3858,10 @@ snapshots:
   '@nolyfill/is-core-module@1.0.39': {}
 
   '@orama/orama@3.1.11': {}
+
+  '@orama/tokenizers@3.1.11':
+    dependencies:
+      '@orama/orama': 3.1.11
 
   '@oxc-transform/binding-android-arm64@0.75.1':
     optional: true

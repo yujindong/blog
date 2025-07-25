@@ -13,7 +13,8 @@ var note = defineDocs({
   docs: {
     schema: frontmatterSchema.extend({
       preview: z.string().optional(),
-      index: z.boolean().default(false)
+      index: z.boolean().default(false),
+      keywords: z.array(z.string()).optional()
     })
   },
   meta: {

@@ -10,6 +10,7 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@orama/tokenizers": "^3.1.11",
     "@types/mdx": "^2.0.13",
     "fumadocs-core": "^15.6.4",
     "fumadocs-docgen": "^2.1.0",

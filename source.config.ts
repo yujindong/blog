@@ -14,6 +14,7 @@ export const note = defineDocs({
     schema: frontmatterSchema.extend({
       preview: z.string().optional(),
       index: z.boolean().default(false),
+      keywords: z.array(z.string()).optional(),
     }),
   },
   meta: {

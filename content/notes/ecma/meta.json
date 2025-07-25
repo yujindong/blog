@@ -1,7 +1,6 @@
 {
-  "title": "ECMAScript",
+  "title": "ECMAScript语言规范",
   "icon": "ECMALogo",
-  "root": true,
   "pages": [
     "index",
     "2025",

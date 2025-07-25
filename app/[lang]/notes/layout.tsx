@@ -3,11 +3,19 @@ import { notes } from "@/lib/source";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import type { ReactNode } from "react";
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({
+  params,
+  children,
+}: {
+  params: Promise<{ lang: string }>;
+  children: ReactNode;
+}) {
+  const { lang } = await params;
+
   return (
     <DocsLayout
-      tree={notes.pageTree}
-      {...baseOptions}
+      {...baseOptions(lang)}
+      tree={notes.pageTree[lang]}
       sidebar={{
         banner: <div className="sr-only">预留广告位</div>,
         footer: <div className="sr-only">footer</div>,

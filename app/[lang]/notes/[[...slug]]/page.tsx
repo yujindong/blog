@@ -39,7 +39,8 @@ export default async function Page(props: {
 }
 
 export async function generateStaticParams() {
-  return notes.generateParams("slug", "locale");
+  return notes.generateParams();
+  // return notes.generateParams("slug", "locale");
 }
 
 export async function generateMetadata(props: {

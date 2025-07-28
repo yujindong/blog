@@ -12,6 +12,8 @@
   "dependencies": {
     "@orama/tokenizers": "^3.1.11",
     "@types/mdx": "^2.0.13",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "fumadocs-core": "^15.6.4",
     "fumadocs-docgen": "^2.1.0",
     "fumadocs-mdx": "^11.6.11",
@@ -26,6 +28,7 @@
     "react-dom": "19.1.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
+    "tailwind-merge": "^3.3.1",
     "zod": "^4.0.5"
   },
   "devDependencies": {

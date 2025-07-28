@@ -48,7 +48,9 @@ export async function generateMetadata(props: {
   params: Promise<{ lang: string; slug?: string[] }>;
 }): Promise<Metadata> {
   const { slug, lang } = await props.params;
+
   const page = notes.getPage(slug, lang);
+  console.log(page);
   if (!page) notFound();
   const image = {
     url: ["/og", ...(slug || []), "image.png"].join("/"),

@@ -13,9 +13,10 @@ export function baseOptions(locale: string): BaseLayoutProps {
         url: "/notes",
       },
     ],
+
     // different props based on `locale`
     nav: {
-      title: "Y",
+      title: "Yu",
       transparentMode: "top",
     },
   };

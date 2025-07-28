@@ -20,6 +20,7 @@ export default async function Page(props: {
   params: Promise<{ lang: string; slug?: string[] }>;
 }) {
   const params = await props.params;
+  console.log(params);
   const page = notes.getPage(params.slug, params.lang);
   if (!page) notFound();
 

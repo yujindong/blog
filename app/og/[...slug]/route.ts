@@ -10,7 +10,6 @@ export async function GET(
   { params }: { params: Promise<{ slug: string[] }> },
 ) {
   const { slug } = await params;
-  console.log(slug);
   const page = notes.getPage(slug.slice(0, -1));
   if (!page) notFound();
 

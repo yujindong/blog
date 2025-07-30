@@ -20,7 +20,6 @@ export default async function Page(props: {
   params: Promise<{ lang: string; slug?: string[] }>;
 }) {
   const params = await props.params;
-  console.log(params);
   const page = notes.getPage(params.slug, params.lang);
   if (!page) notFound();
 
@@ -50,7 +49,8 @@ export async function generateMetadata(props: {
   const { slug, lang } = await props.params;
 
   const page = notes.getPage(slug, lang);
-  console.log(page);
+
+  notes.getPageTree;
   if (!page) notFound();
   const image = {
     url: ["/og", ...(slug || []), "image.png"].join("/"),

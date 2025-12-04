@@ -1,0 +1,68 @@
+---
+title: ES2026(第17版)
+description: ECMAScript2026 已于2025年12月02日正式发布。
+icon: Sparkles
+keywords:
+  - ES2026
+  - ES2026提案的内容
+---
+
+- [GitHub ECMA-262](https://github.com/tc39/proposals/blob/main/finished-proposals.md) 页面上已完成的 4 个提案获得了批准
+
+## Iterator Sequencing (迭代器排序)
+
+[查看提案实现](https://github.com/tc39/proposal-iterator-sequencing)
+
+## Uint8Array to/from Base64(Uint8Array 的 base64编码)
+
+### 基本用法
+
+[查看提案实现](https://github.com/tc39/proposal-arraybuffer-base64)
+
+```js tab="toBase64"
+const arr = new Uint8Array([
+  72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100,
+]);
+console.log(arr.toBase64());
+// 'SGVsbG8gV29ybGQ='
+```
+
+```js tab="toHex"
+const arr = new Uint8Array([
+  72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100,
+]);
+console.log(arr.toHex());
+// '48656c6c6f20576f726c64'
+```
+
+```js tab="fromBase64"
+const string = "SGVsbG8gV29ybGQ=";
+console.log(Uint8Array.fromBase64(string));
+// Uint8Array([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100])
+```
+
+```js tab="fromHex"
+const string = "48656c6c6f20576f726c64";
+console.log(Uint8Array.fromHex(string));
+// Uint8Array([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100])
+```
+
+## Math.sumPrecise(多值求和)
+
+添加一个接受可迭代对象的 Math.sumPrecise 方法，该方法使用比简单求和更精确的算法返回可迭代对象中值的总和。
+
+### 基本用法
+
+```js
+let values = [1e20, 0.1, -1e20];
+
+values.reduce((a, b) => a + b, 0); // 0
+
+Math.sumPrecise(values); // 0.1
+```
+
+[查看提案实现](https://github.com/tc39/proposal-math-sum)
+
+## Error.isError
+
+[查看提案实现](https://github.com/tc39/proposal-is-error)
